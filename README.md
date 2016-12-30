@@ -139,3 +139,17 @@ bindmount /data/common /home/dave/common
 bindmount /data/common /home/peter/common
 bindmount /data/docs /home/peter/docs --read-only
 ```
+
+Here's another bindmount example using `s3fs`. You'll have to pass in the
+`BIND_USER`, `BIND_DIR`, `S3_BUCKET`, `S3_DIR`, `S3_REGION`, and `IAM_ROLE` as
+environment variables to the container.
+
+```
+#!/bin/bash
+# File mounted as: /etc/sftp.d/bindmount.sh
+
+mkdir -p ${BIND_DIR}
+chown -R ${BIND_USER} ${BIND_DIR}
+
+s3fs ${S3_BUCKET}:${S3_DIR} ${BIND_DIR} -o enable_noobj_cache -o stat_cache_expire=30 -o enable_content_md5 -o iam_role=${IAM_ROLE} -o endpoint=${S3_REGION} -o allow_other -o uid=$(id -u ${BIND_USER})
+```
