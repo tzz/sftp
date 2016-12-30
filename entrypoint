@@ -13,7 +13,7 @@ function printHelp() {
 
 function printReadme() {
     cat /README.md
-    echo "TIP: Read this in HTML format here: https://github.com/atmoz/sftp"
+    echo "TIP: Read this in HTML format here: https://github.com/tzz/sftp"
 }
 
 function createUser() {
